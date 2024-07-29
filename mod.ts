@@ -1,4 +1,4 @@
-import { MatchHandler, router, Routes } from "https://crux.land/router@0.0.5";
+import { MatchHandler, router, Routes } from "./router.ts";
 
 export type { MatchHandler };
 

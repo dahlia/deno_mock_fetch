@@ -94,7 +94,7 @@ export function sandbox(): MockFetch {
   };
 }
 
-const globalMockFetch = sandbox();
+const globalMockFetch: MockFetch = sandbox();
 
 /** This is the function that replaces `fetch` when you call `install()`. */
 export const mockedFetch = globalMockFetch.fetch;
@@ -135,14 +135,14 @@ const originalFetch = globalThis.fetch;
  *
  * To restore the original `globalThis.fetch`, call `uninstall()`.
  */
-export const install = (replacement?: typeof fetch) => {
+export const install = (replacement?: typeof fetch): void => {
   globalThis.fetch = replacement ?? mockedFetch;
 };
 
 /**
  * Restore `globalThis.fetch` to what it was before this library was imported.
  */
-export const uninstall = () => {
+export const uninstall = (): void => {
   globalThis.fetch = originalFetch;
   reset();
 };

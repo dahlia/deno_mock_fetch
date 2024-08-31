@@ -1,8 +1,4 @@
-import {
-  assertEquals,
-  assertNotEquals,
-  assertThrowsAsync,
-} from "https://deno.land/std@0.113.0/testing/asserts.ts";
+import { assertEquals, assertNotEquals, assertRejects } from "@std/assert";
 import * as mf from "./mod.ts";
 
 Deno.test({
@@ -27,7 +23,7 @@ Deno.test({
   name: "fetch fails when the fetched route isn't mocked",
   async fn() {
     mf.install();
-    await assertThrowsAsync(async () => {
+    await assertRejects(async () => {
       await fetch("https://localhost:8181/");
     });
     mf.uninstall();
@@ -49,7 +45,7 @@ Deno.test({
     assertEquals(res, routeResponse);
 
     // Let's also make sure that other routes still fail
-    await assertThrowsAsync(async () => {
+    await assertRejects(async () => {
       await fetch("https://0.0.0.0/sup");
     });
 
@@ -98,10 +94,10 @@ Deno.test({
   async fn() {
     mf.install();
 
-    assertThrowsAsync(async () => {
+    assertRejects(async () => {
       await fetch("https://localhost/a");
     });
-    assertThrowsAsync(async () => {
+    assertRejects(async () => {
       await fetch("https://localhost/b");
     });
 
@@ -113,10 +109,10 @@ Deno.test({
 
     mf.reset();
 
-    assertThrowsAsync(async () => {
+    assertRejects(async () => {
       await fetch("https://localhost/a");
     });
-    assertThrowsAsync(async () => {
+    assertRejects(async () => {
       await fetch("https://localhost/b");
     });
 
@@ -128,10 +124,10 @@ Deno.test({
   async fn() {
     mf.install();
 
-    assertThrowsAsync(async () => {
+    assertRejects(async () => {
       await fetch("https://localhost/a");
     });
-    assertThrowsAsync(async () => {
+    assertRejects(async () => {
       await fetch("https://localhost/b");
     });
 
@@ -145,7 +141,7 @@ Deno.test({
 
     await fetch("https://localhost/a");
 
-    assertThrowsAsync(async () => {
+    assertRejects(async () => {
       await fetch("https://localhost/b");
     });
 
@@ -193,7 +189,7 @@ Deno.test({
 
     mf.uninstall();
 
-    await assertThrowsAsync(async () => {
+    await assertRejects(async () => {
       await fetch("https://nice.dev/");
     });
   },

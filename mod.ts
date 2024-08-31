@@ -1,4 +1,4 @@
-import { MatchHandler, router, Routes } from "./router.ts";
+import { type MatchHandler, router, type Routes } from "./router.ts";
 
 export type { MatchHandler };
 
@@ -74,15 +74,15 @@ export function sandbox(): MockFetch {
     )(req);
   }
 
-  function mock(route: string, handler: MatchHandler) {
+  function mock(route: string, handler: MatchHandler): void {
     routeStore.set(route, handler);
   }
 
-  function remove(route: string) {
+  function remove(route: string): void {
     routeStore.delete(route);
   }
 
-  function reset() {
+  function reset(): void {
     routeStore.clear();
   }
 
@@ -97,7 +97,7 @@ export function sandbox(): MockFetch {
 const globalMockFetch: MockFetch = sandbox();
 
 /** This is the function that replaces `fetch` when you call `install()`. */
-export const mockedFetch = globalMockFetch.fetch;
+export const mockedFetch: typeof fetch = globalMockFetch.fetch;
 
 /**
  * Mock a new route, or override an existing handler.
@@ -116,16 +116,16 @@ export const mockedFetch = globalMockFetch.fetch;
  * })
  * ```
  */
-export const mock = globalMockFetch.mock;
+export const mock: MockFetch["mock"] = globalMockFetch.mock;
 
 /** Remove an existing route handler. */
-export const remove = globalMockFetch.remove;
+export const remove: MockFetch["remove"] = globalMockFetch.remove;
 
 /** Remove all existing route handlers. */
-export const reset = globalMockFetch.reset;
+export const reset: MockFetch["reset"] = globalMockFetch.reset;
 
 // Store the original fetch so it can be restored later
-const originalFetch = globalThis.fetch;
+const originalFetch: typeof fetch = globalThis.fetch;
 
 // The functions below are `const` for consistency.
 
